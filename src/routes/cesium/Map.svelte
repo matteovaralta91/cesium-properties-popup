@@ -25,6 +25,7 @@
 			// Get necessary exports from Cesium module
 			const {
 				UrlTemplateImageryProvider,
+				CesiumTerrainProvider,
 				Viewer: CesiumViewer,
 				Cartesian3,
 				Math: CesiumMath,
@@ -35,7 +36,20 @@
 
 			// Configure imagery provider (GSI)
 			const gsiSeamless = new UrlTemplateImageryProvider({
-				url: 'https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg'
+				//url: 'https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg'
+				url: 'http://localhost:3000/satellite_0_8_world_v1.0/{z}/{x}/{y}'
+			});
+
+			const gsiSeamlessItaly = new UrlTemplateImageryProvider({
+				url: 'http://localhost:3000/satellite_8_15_Italy_v1.1/{z}/{x}/{y}'
+			});
+
+			const gsiSeamlessSwiss = new UrlTemplateImageryProvider({
+				url: 'http://localhost:3000/satellite_8_15_Switzerland_v1.0/{z}/{x}/{y}'
+			});
+
+			const gsiSeamlessInterlaken = new UrlTemplateImageryProvider({
+				url: 'http://localhost:3000/satellite_15_19_Interlaken_v1.0/{z}/{x}/{y}'
 			});
 
 			// Configure CESIUM_BASE_URL
@@ -49,21 +63,25 @@
 			});
 
 			// Configure terrain provider
-			viewer.terrainProvider = await cesium.createWorldTerrainAsync();
+			//viewer.terrainProvider = await cesium.createWorldTerrainAsync();
+			viewer.terrainProvider = await CesiumTerrainProvider.fromUrl('http://localhost:3003');
 
 			// Add imagery provider
 			viewer.imageryLayers.addImageryProvider(gsiSeamless);
+			viewer.imageryLayers.addImageryProvider(gsiSeamlessItaly);
+			viewer.imageryLayers.addImageryProvider(gsiSeamlessSwiss);
+			viewer.imageryLayers.addImageryProvider(gsiSeamlessInterlaken);
 
 			// Set initial camera position
 			viewer.camera.setView({
 				destination: Cartesian3.fromDegrees(
-					139.754409, // Longitude
-					35.670355, // Latitude
-					5000 // Altitude (meters)
+					8.649821675420293, // Longitude
+					45.9262704067969, // Latitude
+					2000 // Altitude (meters)
 				),
 				orientation: {
-					heading: CesiumMath.toRadians(0), // View direction (heading)
-					pitch: CesiumMath.toRadians(-30), // Pitch (tilt)
+					heading: CesiumMath.toRadians(220), // View direction (heading)
+					pitch: CesiumMath.toRadians(-20), // Pitch (tilt)
 					roll: 0 // Roll (rotation)
 				}
 			});
