@@ -64,7 +64,7 @@
 
 			// Configure terrain provider
 			//viewer.terrainProvider = await cesium.createWorldTerrainAsync();
-			viewer.terrainProvider = await CesiumTerrainProvider.fromUrl('http://localhost:3003');
+			viewer.terrainProvider = await CesiumTerrainProvider.fromUrl('http://localhost:8848');
 
 			// Add imagery provider
 			viewer.imageryLayers.addImageryProvider(gsiSeamless);
